@@ -30,7 +30,7 @@ class SpaceApplicationTests {
 	MockMvc mvc;
 	@Test
 	public void getSpaceship() throws Exception {
-		this.mvc.perform(get("/spaceship/")
+		this.mvc.perform(get("/spaceship/Voyager")
 						.accept(MediaType.APPLICATION_JSON)
 						.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
@@ -38,7 +38,7 @@ class SpaceApplicationTests {
 	}
 	@Test
 	public void getCrew() throws Exception {
-		this.mvc.perform(get("/spaceship/crew")
+		this.mvc.perform(get("/spaceship/Voyager/crew")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -49,12 +49,12 @@ class SpaceApplicationTests {
 
 	@Test
 	public void getCrewByID() throws Exception {
-		this.mvc.perform(get("/spaceship/crew/1")
+		this.mvc.perform(get("/spaceship/Voyager/crew/1")
 						.accept(MediaType.APPLICATION_JSON)
 						.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("name", is("John")));
-		this.mvc.perform(get("/spaceship/crew/11")
+		this.mvc.perform(get("/spaceship/Voyager/crew/11")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -77,7 +77,7 @@ class SpaceApplicationTests {
 
 		String json = objectMapper.writeValueAsString(newCrew);
 
-		MockHttpServletRequestBuilder request = post("/spaceship/crew/new")
+		MockHttpServletRequestBuilder request = post("/spaceship/Voyager/crew/new")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(json);
 
@@ -91,13 +91,13 @@ class SpaceApplicationTests {
 
 	@Test
 	public void setCrewRole() throws Exception {
-		this.mvc.perform(get("/spaceship/crew/1/Engineer")
+		this.mvc.perform(get("/spaceship/Voyager/crew/1/Engineer")
 						.accept(MediaType.APPLICATION_JSON)
 						.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("name", is("John")))
 				.andExpect(jsonPath("role", is(Role.ENGINEER.toString())));
-		this.mvc.perform(get("/spaceship/crew/11/Pilot")
+		this.mvc.perform(get("/spaceship/Voyager/crew/11/Pilot")
 						.accept(MediaType.APPLICATION_JSON)
 						.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
@@ -137,7 +137,7 @@ class SpaceApplicationTests {
 
 		String json = objectMapper.writeValueAsString(newCrew);
 
-		MockHttpServletRequestBuilder request = post("/spaceship/crew/new")
+		MockHttpServletRequestBuilder request = post("/spaceship/Voyager/crew/new")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(json);
 
@@ -146,12 +146,8 @@ class SpaceApplicationTests {
 				.andExpect(jsonPath("$[13].name", is("Jo")))
 				.andExpect(jsonPath("$[13].id", is(14)))
 				.andExpect(jsonPath("$[14].name", is("Jay")))
-				.andExpect(jsonPath("$[14].id", is(15)));
-
-		/*
-			Note: setCrew is being called
-		 */
-
+				.andExpect(jsonPath("$[14].id", is(15)))
+				.andExpect(jsonPath("$.[15]").doesNotExist());
 	}
 
 	@Test
@@ -168,7 +164,7 @@ class SpaceApplicationTests {
 		};
 
 		String json = objectMapper.writeValueAsString(upgrades);
-		MockHttpServletRequestBuilder request = post("/spaceship/upgrade")
+		MockHttpServletRequestBuilder request = post("/spaceship/Voyager/upgrade")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(json);
 

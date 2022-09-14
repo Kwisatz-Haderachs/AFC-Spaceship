@@ -12,6 +12,37 @@ public class Spaceship {
     private double weaponsRating;
     private double shieldRating;
     private double armorRating;
+    private double weaponStatus;
+    private double shieldStatus;
+    private double armorStatus;
+
+    public void setWeaponsRating(double weaponsRating) {
+        this.weaponsRating = weaponsRating;
+    }
+
+    public double getWeaponStatus() {
+        return weaponStatus;
+    }
+
+    public void setWeaponStatus(double weaponStatus) {
+        this.weaponStatus = weaponStatus;
+    }
+
+    public double getShieldStatus() {
+        return shieldStatus;
+    }
+
+    public void setShieldStatus(double shieldStatus) {
+        this.shieldStatus = shieldStatus;
+    }
+
+    public double getArmorStatus() {
+        return armorStatus;
+    }
+
+    public void setArmorStatus(double armorStatus) {
+        this.armorStatus = armorStatus;
+    }
 
     public double getWeaponsRating() {
         return weaponsRating;
@@ -54,13 +85,11 @@ public class Spaceship {
         if(crew.size() <= crewSize){
             this.crew = crew;
         }
-        System.out.println("Crew is too large!");
     }
 
     public void addToCrew(CrewMember crewMember){
         if(crew.size() < crewSize)
             crew.add(crewMember);
-        System.out.printf("%s can't be added, at capacity!", crewMember.getName());
     }
 
     public int getCrewSize() {
@@ -87,6 +116,7 @@ public class Spaceship {
         switch (type) {
             case ("Destroyer") -> this.type = Type.DESTROYER;
             case ("Cruiser") -> this.type = Type.CRUISER;
+            case ("Exploratory") -> this.type = Type.EXPLORATORY;
             default -> this.type = Type.CORVETTE;
         }
     }

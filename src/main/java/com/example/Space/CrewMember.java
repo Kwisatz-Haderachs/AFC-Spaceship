@@ -1,5 +1,7 @@
 package com.example.Space;
 
+import java.util.random.RandomGenerator;
+
 public class CrewMember {
     private int id;
     private String name;
@@ -7,7 +9,22 @@ public class CrewMember {
 
     public CrewMember(){}
     public CrewMember(int id, String name) {
-        this(id,name,Role.MARINE);
+        this.name = name;
+        this.id = id;
+        this.role = assignRole(id);
+
+
+    }
+    private Role assignRole(int id){
+        int index = id % 3;
+        Role r;
+        switch (index){
+            case(0)-> r = Role.ENGINEER;
+            case(1)-> r = Role.PILOT;
+            case(2)-> r = Role.MEDIC;
+            default -> r= Role.MARINE;
+        }
+        return r;
     }
 
     public CrewMember(int id, String name, Role role) {

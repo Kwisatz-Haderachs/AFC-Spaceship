@@ -3,7 +3,8 @@ package com.example.Space;
 public enum Type {
     CRUISER("Cruiser"),
     DESTROYER("Destroyer"),
-    CORVETTE("Corvette");
+    CORVETTE("Corvette"),
+    EXPLORATORY("Exploratory");
 
     public String type;
 

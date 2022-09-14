@@ -1,15 +1,17 @@
 package com.example.Space;
 
 public enum Role {
-    PILOT("Pilot"),
-    ENGINEER("Engineer"),
-    MEDIC("Medic"),
-    MARINE("Marine");
+    ENGINEER("Engineer", 0),
+    PILOT("Pilot", 1),
+    MEDIC("Medic", 2),
+    MARINE("Marine", 3);
 
     public String role;
+    public int index;
 
-    Role(String role){
+    Role(String role, int i){
         this.role = role;
+        this.index = i;
     }
 
     public String getRole(){
@@ -18,4 +20,5 @@ public enum Role {
     public void setRole(String role){
         this.role = role;
     }
+    public String getIndex() {return role;}
 }

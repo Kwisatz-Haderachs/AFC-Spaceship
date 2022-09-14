@@ -11,43 +11,41 @@ public class SpaceshipController {
     private final SpaceshipService ss;
     public SpaceshipController(SpaceshipService ss){this.ss = ss;}
 
-    @RequestMapping("/")
-    public Spaceship getSpaceship(){
-        return ss.getSpaceship();
+    @RequestMapping("/{name}")
+    public Spaceship getSpaceship(@PathVariable String name){
+        return ss.getSpaceship(name);
     }
 
-    @RequestMapping("/crew")
-    public List<CrewMember> getCrew(@RequestParam (defaultValue = "false", required = false) boolean sort){
-        return ss.getCrew(sort);
+    @RequestMapping("/{name}/crew")
+    public List<CrewMember> getCrew(@PathVariable String name, @RequestParam (defaultValue = "false", required = false) boolean sort){
+        return ss.getCrew(name, sort);
     }
 
-    @RequestMapping("/crew/{id}")
-    public CrewMember getCrewByID(@PathVariable String id){
-        int i;
+    @RequestMapping("/{name}/crew/{id}")
+    public CrewMember getCrewByID(@PathVariable String name, @PathVariable String id){
         try{
-            i = Integer.parseInt(id);
-            return ss.getCrewByID(i);
+            return ss.getCrewByID(name, Integer.parseInt(id));
         }catch (NumberFormatException e){
             return null;
         }
     }
 
-    @RequestMapping("/crew/{id}/{role}")
-    public CrewMember setCrewRole(@PathVariable Integer id, @PathVariable String role){
+    @RequestMapping("/{name}/crew/{id}/{role}")
+    public CrewMember setCrewRole(@PathVariable String name, @PathVariable Integer id, @PathVariable String role){
         try{
-            ss.getCrewByID(id).setRole(role);
-            return ss.getCrewByID(id);
+            ss.getCrewByID(name, id).setRole(role);
+            return ss.getCrewByID(name, id);
         }catch (NumberFormatException e){
             return null;
         }
     }
 
-    @RequestMapping("/crew/new")
-    public List<CrewMember> addCrewMembers(@RequestBody Map<String, List<CrewMember>> newCrew){
+    @RequestMapping("/{name}/crew/new")
+    public List<CrewMember> addCrewMembers(@PathVariable String name, @RequestBody Map<String, List<CrewMember>> newCrew){
         for (CrewMember c: newCrew.get("newCrew")) {
-            ss.addCrew(c);
+            ss.addCrew(name, c);
         }
-        return ss.getCrew(false);
+        return ss.getCrew(name, false);
     }
 
     @GetMapping("/current")
@@ -58,9 +56,9 @@ public class SpaceshipController {
         return "<empty>";
     }
 
-    @RequestMapping("/upgrade")
-    public Spaceship upgradeShip(@RequestBody Map<String, String> upgrades){
-        ss.upgradeSpaceship(upgrades);
-        return ss.getSpaceship();
+    @RequestMapping("/{name}/upgrade")
+    public Spaceship upgradeShip(@PathVariable String name, @RequestBody Map<String, String> upgrades){
+        ss.upgradeSpaceship(name, upgrades);
+        return ss.getSpaceship(name);
     }
 }
